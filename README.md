@@ -123,16 +123,6 @@ Die Warnungen bei der Installation kannst du ignorieren.
 
 
 
-## 7.) ESLint einrichten
-
-Richte bitte anschließend das Tool *ESLint* im Projekt ein.
-Den folgenden Befehl musst du ebenfalls im Projektverzeichnis `book-rating` ausführen:
-
-```bash
-ng add @angular-eslint/schematics
-```
-
-
 
 ### Wir freuen uns schon! 🙂
 
