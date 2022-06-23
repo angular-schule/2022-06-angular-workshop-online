@@ -16,9 +16,15 @@ export class BookRatingService {
   }
 
   rateDown(book: Book): Book {
-    return {
+    /*return {
       ...book,
       rating: Math.max(book.rating - 1, 1)
-    };
+    };*/
+    const clone = structuredClone(book);
+    clone.rating = Math.max(book.rating - 1, 1);
+    return clone;
   }
 }
+
+
+
