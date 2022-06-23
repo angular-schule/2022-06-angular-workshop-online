@@ -7,6 +7,7 @@
         {{ book.title }}
         <span class="badge bg-secondary">{{ book.rating }}</span>
       </h2>
+      <br-stars [rating]="book.rating"></br-stars>
     </div>
     <p>{{ book.description }}</p>
     <p>Preis: {{ book.price }}</p>
