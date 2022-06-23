@@ -30,6 +30,7 @@ describe('BookRatingService', () => {
   it('should rate up a book by one', () => {
     // Arrange
     book.rating = 3;
+    debugger;
 
     // Act
     const ratedBook = service.rateUp(book);
