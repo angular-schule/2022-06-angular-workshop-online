@@ -9,9 +9,9 @@ describe('DashboardComponent', () => {
   let fixture: ComponentFixture<DashboardComponent>;
 
   beforeEach(async () => {
-    const ratingMock = {
+    const ratingMock: Partial<BookRatingService> = {
       rateUp: (b: Book) => b,
-      rateDown: (b: Book) => b
+      // rateDown: (b: Book) => b
     };
 
     await TestBed.configureTestingModule({
