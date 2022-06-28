@@ -34,11 +34,15 @@ export class CreatingComponent {
     // of(1,2,3,4,5)
     // from([1,2,3,4,5])
     // interval(1000) // ---0---1---2---3---4---5---...
+    // timer(1000, 1000) === interval(1000)
     // timer(2000) // ------0|
     // timer(3000, 1000) // ---------0---1---2---3---4---5---...
     // timer(0, 1000) // 0---1---2---3---4---5---...
 
-    timer(0, 1000).subscribe({
+    timer(0, 1000).pipe(
+      map(e => e * 3),
+      filter(n => n % 2 === 0)
+    ).subscribe({
       next: e => this.log(e),
       complete: () => this.log('COMPLETE')
     });
@@ -75,6 +79,16 @@ export class CreatingComponent {
     // Finnische Notation
     const myObservable$ = new Observable(producer);
     // myObservable$.subscribe(observer);
+
+    // so KÖNNTE Observable implementiert sein
+    /*class MyObservable {
+      constructor(private producer: any) {}
+
+      subscribe(obs: Partial<Observer<any>>) {
+        const subscriber = fixObserver(obs);
+        this.producer(subscriber);
+      }
+    }*/
 
 
     /******************************/
