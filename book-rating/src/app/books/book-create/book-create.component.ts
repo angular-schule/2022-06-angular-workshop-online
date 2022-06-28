@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Book } from '../shared/book';
+import { BookStoreService } from '../shared/book-store.service';
 
 @Component({
   selector: 'br-book-create',
@@ -25,9 +28,15 @@ export class BookCreateComponent implements OnInit {
     price: new FormControl(0, { nonNullable: true, validators: Validators.min(0) }),
   });
 
-  constructor() {}
+  constructor(private bs: BookStoreService, private router: Router) {}
 
   ngOnInit(): void {
+  }
+
+  hasError(controlName: string, errorCode: string): boolean {
+    const control = this.bookForm.get(controlName);
+    return !!control && control.hasError(errorCode) && control.touched;
+    // return !!control && control.getError(errorCode) && control.touched;
   }
 
 
@@ -37,4 +46,25 @@ export class BookCreateComponent implements OnInit {
     // return (control instanceof AbstractControl) && control.invalid && control.touched;
   }
 
+  submitForm() {
+    // value: nur aktive Felder
+    // getRawValue(): alle Felder (aktiv und inaktiv)
+    const book: Book = this.bookForm.getRawValue();
+
+    this.bs.create(book).subscribe(receivedBook => {
+      this.router.navigate(['/books', receivedBook.isbn]); // [routerLink]="['/books', receivedBook.isbn]"
+      // this.router.navigateByUrl('/books' + receivedBook.isbn); // [routerLink]="'/books' + receivedBook.isbn"
+    });
+  }
+
 }
+
+
+/*
+TODO
+- Submit-Button
+- abschicken
+- HTTP-Request
+  - bei Erfolg: Navigation zur Detailseite
+
+*/
