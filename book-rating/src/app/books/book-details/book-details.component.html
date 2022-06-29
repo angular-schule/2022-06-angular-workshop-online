@@ -1,4 +1,7 @@
-<ng-container *ngIf="book">
+<!--{{ book$ | async | json }}-->
+
+
+<ng-container *ngIf="book$ | async as book">
   <h2>{{ book.title }}</h2>
 
   <p>{{ book.description }}</p>
