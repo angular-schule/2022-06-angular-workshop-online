@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Subject, ReplaySubject, Observable, map, mergeAll, mergeMap, concatMap, switchMap, exhaustMap } from 'rxjs';
+import { Subject, ReplaySubject, Observable, map, mergeAll, mergeMap, concatMap, switchMap, exhaustMap, EMPTY } from 'rxjs';
 
 import { ExerciseService } from '../exercise.service';
 
@@ -10,7 +10,7 @@ import { ExerciseService } from '../exercise.service';
 export class HigherorderComponent {
 
   logStream$ = new ReplaySubject<string>();
-  source$ = new Subject<string>();
+  source$ = new Subject<string>(); // Datenstrom von Tierschreien
 
   result$: Observable<string>;
 
@@ -28,7 +28,7 @@ export class HigherorderComponent {
     /**************!!**************/
 
     this.result$ = this.source$.pipe(
-      // TODO
+      exhaustMap(tier => this.es.echo(tier))
     );
 
     /**************!!**************/

@@ -48,6 +48,11 @@ export class CreatingComponent {
     });
 
 
+    timer(0, 1000).pipe(
+      map(() => Date.now())
+    ).subscribe(console.log)
+
+
     /******************************/
 
 
