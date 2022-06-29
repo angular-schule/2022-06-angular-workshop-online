@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { map } from 'rxjs';
 import { Book } from '../shared/book';
 import { BookRatingService } from '../shared/book-rating.service';
 import { BookStoreService } from '../shared/book-store.service';
+import { loadBooks } from '../store/book.actions';
+import { selectBooks } from '../store/book.selectors';
 
 @Component({
   selector: 'br-dashboard',
@@ -11,11 +15,21 @@ import { BookStoreService } from '../shared/book-store.service';
 export class DashboardComponent implements OnInit {
 
   books: Book[] = [];
+  books$ = this.store.select(selectBooks);
 
-  constructor(private rs: BookRatingService, private bs: BookStoreService) {
-    this.bs.getAll().subscribe(receivedBooks => {
+  constructor(private rs: BookRatingService, private store: Store/*private bs: BookStoreService*/) {
+   /* this.bs.getAll().subscribe(receivedBooks => {
         this.books = receivedBooks;
-      });
+      });*/
+
+    this.store.dispatch(loadBooks());
+
+    // TODO: AsyncPipe verwenden
+    this.store.select(selectBooks).subscribe(receivedBooks => {
+      this.books = receivedBooks;
+    });
+
+
 
   }
 
@@ -41,7 +55,7 @@ export class DashboardComponent implements OnInit {
       }
     })*/
 
-    this.books = this.books.map(b => b.isbn === ratedBook.isbn ? ratedBook : b);
+    // this.books = this.books.map(b => b.isbn === ratedBook.isbn ? ratedBook : b);
   }
 
   ngOnInit(): void {}
